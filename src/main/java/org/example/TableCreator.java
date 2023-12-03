@@ -10,7 +10,7 @@ import org.example.model.DatabaseConnectionManager;
 public class TableCreator {
 
     public static void createTable() {
-        String createTableQuery = "CREATE TABLE products ("
+        String createTableQuery = "CREATE TABLE products("
                 + "product_id SERIAL PRIMARY KEY,"
                 + "name VARCHAR(255),"
                 + "price DOUBLE PRECISION)";

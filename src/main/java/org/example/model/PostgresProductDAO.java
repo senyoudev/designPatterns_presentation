@@ -3,8 +3,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 public class PostgresProductDAO implements ProductDAO {
-
-
         private static final String SELECT_BY_ID_QUERY = "SELECT * FROM products WHERE product_id = ?";
         private static final String SELECT_ALL_QUERY = "SELECT * FROM products";
         private static final String INSERT_QUERY = "INSERT INTO products (name, price) VALUES (?, ?)";

@@ -69,19 +69,7 @@ public class Main {
         // Print the retrieved products
         retrievedProducts.stream().forEach(System.out::println);
 
-        // Print the retrieved product
 
-//        // Create an OrderProcessor instance
-//        OrderProcessor orderProcessor = new OrderProcessor();
-//
-//        // Create an example order using the first product from the database
-//        Order exampleOrder = createExampleOrder(allProducts);
-//
-//        // Create a command to place the order
-//        OrderCommand placeOrderCommand = new PlaceOrderCommand(orderProcessor, exampleOrder);
-//
-//        // Execute the command
-//        orderProcessor.placeOrder(placeOrderCommand);
     }
 
     private static Order createExampleOrder(List<Product> products) {
