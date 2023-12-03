@@ -1,6 +1,10 @@
 package org.example;
 
 
+import org.example.controller.OrderProcessor;
+import org.example.controller.PlaceOrderCommand;
+import org.example.dao.PostgresProductDAO;
+import org.example.dao.ProductDAO;
 import org.example.model.*;
 
 import java.sql.Connection;

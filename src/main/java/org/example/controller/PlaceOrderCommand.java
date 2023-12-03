@@ -1,4 +1,8 @@
-package org.example.model;
+package org.example.controller;
+
+import org.example.controller.OrderProcessor;
+import org.example.model.Order;
+import org.example.model.OrderCommand;
 
 public class PlaceOrderCommand implements OrderCommand {
     private OrderProcessor orderProcessor;

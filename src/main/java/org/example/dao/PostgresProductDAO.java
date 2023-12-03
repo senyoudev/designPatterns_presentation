@@ -1,4 +1,8 @@
-package org.example.model;
+package org.example.dao;
+import org.example.dao.ProductDAO;
+import org.example.model.DatabaseConnectionManager;
+import org.example.model.Product;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;

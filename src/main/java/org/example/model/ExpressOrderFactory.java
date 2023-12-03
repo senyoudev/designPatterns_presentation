@@ -1,5 +1,7 @@
 package org.example.model;
 
+import org.example.dao.ProductDAO;
+
 import java.util.List;
 
 public class ExpressOrderFactory implements OrderFactory {

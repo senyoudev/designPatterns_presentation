@@ -1,4 +1,9 @@
-package org.example.model;
+package org.example.view;
+
+import org.example.controller.OrderProcessor;
+import org.example.dao.PostgresProductDAO;
+import org.example.dao.ProductDAO;
+import org.example.model.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,7 +32,7 @@ public class InteractiveOrderManagementApp {
     private boolean orderVerified = false;
 
     public InteractiveOrderManagementApp() {
-        availableProducts = createSampleProducts();
+        availableProducts = getProductsFromDb();
         orderProcessor = new OrderProcessor();
         initialize();
     }
@@ -140,11 +145,9 @@ public class InteractiveOrderManagementApp {
         frame.getContentPane().add(panel);
     }
 
-    private List<Product> createSampleProducts() {
-        List<Product> products = new ArrayList<>();
-        products.add(new Product("Product 1", 10.0));
-        products.add(new Product("Product 2", 15.0));
-        products.add(new Product("Product 3", 20.0));
+    private List<Product> getProductsFromDb() {
+        ProductDAO productDAO = new PostgresProductDAO();
+        List<Product> products = productDAO.getAllProducts();
         return products;
     }
 
