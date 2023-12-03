@@ -7,8 +7,8 @@ public class PostgresProductDAO implements ProductDAO {
 
         private static final String SELECT_BY_ID_QUERY = "SELECT * FROM products WHERE product_id = ?";
         private static final String SELECT_ALL_QUERY = "SELECT * FROM products";
-        private static final String INSERT_QUERY = "INSERT INTO products (product_name, price) VALUES (?, ?)";
-        private static final String UPDATE_QUERY = "UPDATE products SET product_name = ?, price = ? WHERE product_id = ?";
+        private static final String INSERT_QUERY = "INSERT INTO products (name, price) VALUES (?, ?)";
+        private static final String UPDATE_QUERY = "UPDATE products SET name = ?, price = ? WHERE product_id = ?";
         private static final String DELETE_QUERY = "DELETE FROM products WHERE product_id = ?";
 
     @Override
@@ -20,7 +20,7 @@ public class PostgresProductDAO implements ProductDAO {
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
-                    String productName = resultSet.getString("product_name");
+                    String productName = resultSet.getString("name");
                     double price = resultSet.getDouble("price");
                     return new Product(productName, price);
                 }
@@ -41,9 +41,10 @@ public class PostgresProductDAO implements ProductDAO {
              ResultSet resultSet = statement.executeQuery(SELECT_ALL_QUERY)) {
 
             while (resultSet.next()) {
-                String productName = resultSet.getString("product_name");
+                int productId = resultSet.getInt("product_id");
+                String productName = resultSet.getString("name");
                 double price = resultSet.getDouble("price");
-                products.add(new Product(productName, price));
+                products.add(new Product(productId,productName, price));
             }
 
         } catch (SQLException e) {

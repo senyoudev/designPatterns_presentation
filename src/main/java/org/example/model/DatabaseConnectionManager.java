@@ -13,7 +13,7 @@ public class DatabaseConnectionManager {
         return instance;
     }
 
-    private static final String url = "jdbc:postgresql://localhost:5432/rmi";
+    private static final String url = "jdbc:postgresql://localhost:5432/dp";
     private static final String username = "postgres";
     private static final String password = "password";
 

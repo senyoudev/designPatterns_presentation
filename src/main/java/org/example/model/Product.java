@@ -3,13 +3,19 @@ package org.example.model;
 import java.util.Objects;
 
 public class Product {
-    private static int productId = 1;
+    private int productId;
     private String name;
     private double price;
 
-
     public Product(String name, double price) {
-        this.productId++;
+        this.productId = 1;
+        this.name = name;
+        this.price = price;
+    }
+
+
+    public Product(int productId,String name, double price) {
+        this.productId = productId;
         this.name = name;
         this.price = price;
     }
