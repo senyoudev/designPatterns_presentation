@@ -15,13 +15,10 @@ public class PlaceOrderCommand implements OrderCommand {
 
     @Override
     public void execute() {
-        // Perform any pre-processing logic if needed
         System.out.println("Executing PlaceOrderCommand...");
 
-        // Delegate the order processing to the OrderProcessor
         orderProcessor.processOrder(order);
 
-        // Perform any post-processing logic if needed
         System.out.println("PlaceOrderCommand executed successfully.");
     }
 }

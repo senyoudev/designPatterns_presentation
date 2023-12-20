@@ -28,10 +28,12 @@ public class InteractiveOrderManagementApp {
     private List<Product> availableProducts;
     private OrderProcessor orderProcessor;
     private Order currentOrder;
+    private ProductDAO productDAO;
 
     private boolean orderVerified = false;
 
     public InteractiveOrderManagementApp() {
+        productDAO = new PostgresProductDAO();
         availableProducts = getProductsFromDb();
         orderProcessor = new OrderProcessor();
         initialize();
@@ -52,6 +54,9 @@ public class InteractiveOrderManagementApp {
         orderListModel = new DefaultListModel<>();
         orderList = new JList<>(orderListModel);
 
+        String[] orderTypes = {"Regular", "Express"};
+        JComboBox<String> orderTypeDropdown = new JComboBox<>(orderTypes);
+
         addToOrderButton = new JButton("Add to Order");
         addToOrderButton.addActionListener(new ActionListener() {
             @Override
@@ -71,7 +76,16 @@ public class InteractiveOrderManagementApp {
                 for (int i = 0; i < orderListModel.getSize(); i++) {
                     selectedProducts.add(orderListModel.getElementAt(i));
                 }
-                currentOrder = new RegularOrder(selectedProducts);
+                String selectedOrderType = (String) orderTypeDropdown.getSelectedItem();
+
+                RegularOrderFactory regularOrderFactory = new RegularOrderFactory(productDAO);
+                ExpressOrderFactory expressOrderFactory = new ExpressOrderFactory(productDAO);
+
+
+                currentOrder = selectedOrderType.equals("Express")
+                        ? expressOrderFactory.createOrder(selectedProducts)
+                        : regularOrderFactory.createOrder(selectedProducts);
+
                 JOptionPane.showMessageDialog(frame, "Order Placed!", "Order Status", JOptionPane.INFORMATION_MESSAGE);
                 updateTotalLabel();
             }
@@ -120,6 +134,12 @@ public class InteractiveOrderManagementApp {
 
         totalLabel = new JLabel("Total: $0.00");
 
+        JPanel centerPanel = new JPanel();
+        centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
+
+        centerPanel.add(totalLabel);
+        centerPanel.add(orderTypeDropdown);
+
         JPanel panel = new JPanel(new BorderLayout());
 
         JPanel productListPanel = new JPanel(new BorderLayout());
@@ -132,6 +152,8 @@ public class InteractiveOrderManagementApp {
         orderListPanel.add(new JScrollPane(orderList), BorderLayout.CENTER);
         orderListPanel.add(placeOrderButton, BorderLayout.SOUTH);
 
+
+
         JPanel processingPanel = new JPanel(new FlowLayout());
         processingPanel.add(verifyButton);
         processingPanel.add(payButton);
@@ -140,13 +162,12 @@ public class InteractiveOrderManagementApp {
         panel.add(productListPanel, BorderLayout.WEST);
         panel.add(orderListPanel, BorderLayout.EAST);
         panel.add(processingPanel, BorderLayout.SOUTH);
-        panel.add(totalLabel, BorderLayout.CENTER);
+        panel.add(centerPanel, BorderLayout.CENTER);
 
         frame.getContentPane().add(panel);
     }
 
     private List<Product> getProductsFromDb() {
-        ProductDAO productDAO = new PostgresProductDAO();
         List<Product> products = productDAO.getAllProducts();
         return products;
     }
